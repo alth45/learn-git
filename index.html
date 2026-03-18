@@ -1,10 +1,568 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Website Pertama Gua</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Belajar GitHub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #7fff6e;
+      --accent2: #6eb5ff;
+      --accent3: #ff6eb5;
+      --text: #e8e8f0;
+      --muted: #555568;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-display);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 2rem 4rem 6vw;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(127,255,110,0.08) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(110,181,255,0.06) 0%, transparent 70%);
+      bottom: 50px;
+      left: 10%;
+      pointer-events: none;
+      animation: pulse 6s ease-in-out infinite reverse;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      width: fit-content;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 1.5s ease infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero h1 span {
+      display: block;
+      -webkit-text-stroke: 1px var(--accent);
+      color: transparent;
+    }
+
+    .hero p {
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 3rem;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 6vw;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeUp 0.6s ease 0.5s both;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* SECTION */
+    section {
+      padding: 6rem 6vw;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+
+    /* COMMANDS GRID */
+    .commands-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .cmd-card {
+      background: var(--surface);
+      padding: 2rem;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .cmd-card:hover {
+      background: #16161f;
+    }
+
+    .cmd-card:hover .cmd-code {
+      color: var(--accent);
+    }
+
+    .cmd-code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent2);
+      margin-bottom: 0.75rem;
+      transition: color 0.2s;
+    }
+
+    .cmd-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .cmd-desc {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* WORKFLOW */
+    .workflow {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 3rem;
+      margin-top: 4rem;
+    }
+
+    .workflow-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 2rem;
+    }
+
+    .workflow-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .w-step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .w-step-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .w-arrow {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    /* ACTIONS SECTION */
+    .actions-flow {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .actions-flow { grid-template-columns: 1fr; }
+      .hero-stats { gap: 2rem; }
+    }
+
+    .flow-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flow-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+    }
+
+    .flow-card.green::before { background: var(--accent); }
+    .flow-card.blue::before { background: var(--accent2); }
+
+    .flow-card-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
+
+    .flow-card.green .flow-card-label { color: var(--accent); }
+    .flow-card.blue .flow-card-label { color: var(--accent2); }
+
+    .flow-card-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .flow-card pre {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .flow-card pre .hl { color: var(--accent); }
+    .flow-card pre .hl2 { color: var(--accent2); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer .logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    footer .logo span { color: var(--accent); }
+
+    footer p {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* terminal blink cursor */
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.1em;
+      background: var(--accent);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+  </style>
 </head>
 <body>
-  <h1>Halo, ini website gua!</h1>
-  <p>Di-deploy otomatis pake GitHub Actions 🚀</p>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Deployed via GitHub Actions
+    </div>
+
+    <h1>
+      Master
+      <span>GitHub.</span>
+    </h1>
+
+    <p>
+      Dari <code style="color:var(--accent2)">git init</code> sampai CI/CD otomatis.<br/>
+      Semua workflow yang dipake developer profesional.
+    </p>
+
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Commands</div>
+      </div>
+      <div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Hari belajar</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Potensi</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span class="scroll-line"></span>
+      scroll to explore
+    </div>
+  </section>
+
+  <!-- COMMANDS -->
+  <section>
+    <div class="section-label">// cheat sheet</div>
+    <h2 class="section-title">Perintah<br/>Wajib Git</h2>
+
+    <div class="commands-grid">
+      <div class="cmd-card">
+        <div class="cmd-code">git clone &lt;url&gt;</div>
+        <div class="cmd-title">Clone</div>
+        <div class="cmd-desc">Copy repo dari GitHub ke komputer lo</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git status</div>
+        <div class="cmd-title">Status</div>
+        <div class="cmd-desc">Cek kondisi & perubahan di folder lo</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git add .</div>
+        <div class="cmd-title">Add</div>
+        <div class="cmd-desc">Masukin semua perubahan ke staging area</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git commit -m "pesan"</div>
+        <div class="cmd-title">Commit</div>
+        <div class="cmd-desc">Simpan snapshot perubahan ke history</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git push</div>
+        <div class="cmd-title">Push</div>
+        <div class="cmd-desc">Upload commit lo ke GitHub</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git pull</div>
+        <div class="cmd-title">Pull</div>
+        <div class="cmd-desc">Download update terbaru dari GitHub</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git checkout -b nama</div>
+        <div class="cmd-title">Branch</div>
+        <div class="cmd-desc">Bikin & pindah ke branch baru sekaligus</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git stash</div>
+        <div class="cmd-title">Stash</div>
+        <div class="cmd-desc">Simpan perubahan sementara tanpa commit</div>
+      </div>
+      <div class="cmd-card">
+        <div class="cmd-code">git log --oneline</div>
+        <div class="cmd-title">Log</div>
+        <div class="cmd-desc">Lihat semua history commit secara ringkas</div>
+      </div>
+    </div>
+
+    <!-- WORKFLOW -->
+    <div class="workflow">
+      <div class="workflow-title">// daily workflow</div>
+      <div class="workflow-steps">
+        <div class="w-step">
+          <div class="w-step-box">git pull</div>
+          <span class="w-arrow">→</span>
+        </div>
+        <div class="w-step">
+          <div class="w-step-box">edit kode</div>
+          <span class="w-arrow">→</span>
+        </div>
+        <div class="w-step">
+          <div class="w-step-box">git add .</div>
+          <span class="w-arrow">→</span>
+        </div>
+        <div class="w-step">
+          <div class="w-step-box">git commit</div>
+          <span class="w-arrow">→</span>
+        </div>
+        <div class="w-step">
+          <div class="w-step-box">git push</div>
+          <span class="w-arrow">→</span>
+        </div>
+        <div class="w-step">
+          <div class="w-step-box" style="border-color: var(--accent); color: var(--accent);">✓ done</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GITHUB ACTIONS -->
+  <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section-label">// otomasi</div>
+    <h2 class="section-title">GitHub<br/>Actions</h2>
+
+    <div class="actions-flow">
+      <div class="flow-card green">
+        <div class="flow-card-label">Auto Testing</div>
+        <div class="flow-card-title">Test otomatis<br/>setiap push</div>
+        <pre>
+on: <span class="hl">push</span>
+  branches: [main]
+
+jobs:
+  test:
+    steps:
+      - <span class="hl2">npm install</span>
+      - <span class="hl2">npm test</span>
+
+✓ PASS  tambah 2+3 = 5
+✓ PASS  kurang 5-3 = 2
+        </pre>
+      </div>
+
+      <div class="flow-card blue">
+        <div class="flow-card-label">Auto Deploy</div>
+        <div class="flow-card-title">Deploy otomatis<br/>ke GitHub Pages</div>
+        <pre>
+  deploy:
+    <span class="hl">needs: testing</span>
+    steps:
+      - uses: <span class="hl2">actions-gh-pages</span>
+        with:
+          publish_dir: ./
+
+→ <span class="hl">Live at github.io ✓</span>
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo">learn<span>.</span>git</div>
+    <p>Built & deployed with 💚 using GitHub Actions</p>
+    <p style="color: var(--accent); font-family: var(--font-mono); font-size: 0.72rem;">
+      $ git push origin main<span class="cursor"></span>
+    </p>
+  </footer>
+
 </body>
 </html>
