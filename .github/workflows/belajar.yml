@@ -14,5 +14,5 @@ jobs:
         run: echo "Hallo github action jalan!"
       - name: Cek Tanggal
         run: date
-      -name: Cek Folder
+      - name: Cek Folder
         run: ls
