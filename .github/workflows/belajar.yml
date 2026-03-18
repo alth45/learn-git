@@ -1,4 +1,4 @@
-name: Belajar Github Action
+name: Auto Testing
 
 on:
   push:
@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cek Node versi
-        run: node --version
+      - name: Install dependencies
+        run: npm install
 
-      - name: Cek NPM versi
-        run: npm --version
+      - name: Jalanin test
+        run: npm test
