@@ -12,3 +12,7 @@ jobs:
     steps:
       - name: Sapa Dunia
         run: echo "Hallo github action jalan!"
+      - name: Cek Tanggal
+        run: date
+      -name: Cek Folder
+        run: ls
