@@ -1,0 +1,14 @@
+name: Belajar Github Action
+
+on:
+  push:
+    branches:
+      - main
+
+  jobs:
+    sapa:
+      runs-on: ubuntu-latest
+      steps: 
+        - name: Sapa Dunia
+        run: echo "Hallo github action jalan!"
+        
