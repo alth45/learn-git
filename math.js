@@ -1,4 +1,5 @@
 function tambah(a, b) {
+  //fix sekarang sudah berjalan normal
   return a + b;
 }
 
