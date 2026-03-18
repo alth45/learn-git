@@ -7,15 +7,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  sapa:
+  testing:
     runs-on: ubuntu-latest
-    env:
-      NAMA: "Bro"
-      APP: "Belajar GitHub"
-      API_KEY: ${{ secrets.API_KEY }}
     steps:
-      - name: Sapa Dunia
-        run: echo "Hallo $NAMA, selamat belajar $APP!"
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Cek Secret
-        run: echo "API Key lo adalah $API_KEY"
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cek Node versi
+        run: node --version
+
+      - name: Cek NPM versi
+        run: npm --version
