@@ -5,10 +5,9 @@ on:
     branches:
       - main
 
-  jobs:
-    sapa:
-      runs-on: ubuntu-latest
-      steps: 
-        - name: Sapa Dunia
+jobs:
+  sapa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sapa Dunia
         run: echo "Hallo github action jalan!"
-        
