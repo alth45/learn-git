@@ -6,4 +6,8 @@ function kurang(a, b) {
   return a - b;
 }
 
-module.exports = { tambah, kurang };
+function kali(a, b) {
+  return a * b;
+}
+
+module.exports = { tambah, kurang, kali };
