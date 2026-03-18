@@ -12,9 +12,10 @@ jobs:
     env:
       NAMA: "Bro"
       APP: "Belajar GitHub"
+      API_KEY: ${{ secrets.API_KEY }}
     steps:
       - name: Sapa Dunia
         run: echo "Hallo $NAMA, selamat belajar $APP!"
 
-      - name: Cek Env
-        run: echo "App yang dipelajari adalah $APP"
+      - name: Cek Secret
+        run: echo "API Key lo adalah $API_KEY"
