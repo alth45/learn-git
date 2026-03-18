@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Sapa Dunia
         run: echo "Hallo github action jalan!"
+
+  cek-sistem:
+    runs-on: ubuntu-latest
+    steps:
       - name: Cek Tanggal
         run: date
       - name: Cek Folder
