@@ -9,14 +9,12 @@ on:
 jobs:
   sapa:
     runs-on: ubuntu-latest
+    env:
+      NAMA: "Bro"
+      APP: "Belajar GitHub"
     steps:
       - name: Sapa Dunia
-        run: echo "Hallo github action jalan!"
+        run: echo "Hallo $NAMA, selamat belajar $APP!"
 
-  cek-sistem:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cek Tanggal
-        run: date
-      - name: Cek Folder
-        run: ls
+      - name: Cek Env
+        run: echo "App yang dipelajari adalah $APP"
