@@ -1,6 +1,6 @@
 function tambah(a, b) {
   //fix sekarang sudah berjalan normal
-  return a - b;
+  return a + b;
 }
 
 function kurang(a, b) {
