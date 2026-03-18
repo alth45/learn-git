@@ -1,4 +1,4 @@
-name: Auto Testing
+name: Belajar Github Action
 
 on:
   push:
