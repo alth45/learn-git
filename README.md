@@ -1,9 +1,4 @@
-notepad README.md
-```
-
-Hapus semua isinya, ganti dengan ini:
-```
-# Learn Git
+﻿# Learn Git
 
 Repo belajar Git dan GitHub dari 0 sampai mahir.
 
